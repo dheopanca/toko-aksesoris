@@ -3,11 +3,6 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install && npm --prefix backend install",
   "framework": "vite",
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
