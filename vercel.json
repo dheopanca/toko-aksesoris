@@ -5,11 +5,8 @@
   "framework": "vite",
   "functions": {
     "api/*.js": {
-      "runtime": "nodejs18.x"
+      "runtime": "nodejs20.x"
     }
-  },
-  "env": {
-    "NODE_ENV": "production"
   },
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
