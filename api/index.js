@@ -1,26 +1,26 @@
-// Vercel Serverless Function entry that forwards to the Express app
+const { createServer } = require('http');
+const express = require('express');
 const app = require('../backend/index');
 
-module.exports = async (req, res) => {
-  // Set proper headers for CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', process.env.CORS_ORIGIN || '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
-  );
+// Create a new express app for Vercel
+const serverless = express();
 
-  // Handle OPTIONS method for CORS preflight
+// Apply CORS middleware
+serverless.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', process.env.CORS_ORIGIN || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-
-  // Remove '/api' prefix so Express routes match
-  if (req.url && req.url.startsWith('/api')) {
-    req.url = req.url.slice(4) || '/';
+    return res.status(200).end();
   }
   
-  return app(req, res);
-};
+  next();
+});
+
+// Mount the main app
+serverless.use('/', app);
+
+// Export the serverless function
+module.exports = serverless;
