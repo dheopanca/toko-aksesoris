@@ -1,16 +1,17 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "toko-aksesoris",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix backend\" \"vite\"",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "npm run dev --prefix backend",
-    "dev:frontend": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "dev:frontend": "cd frontend && vite",
+    "build": "npm install && npm run build:frontend",
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "build:dev": "cd frontend && npm run build:dev",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "cd frontend && npm run preview"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
