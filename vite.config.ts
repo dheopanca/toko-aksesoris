@@ -9,9 +9,10 @@ export default defineConfig(({ mode }): UserConfig => {
   // Load env vars based on mode and prefix
   const env = loadEnv(mode, process.cwd(), '');
   
+  const isProduction = mode === 'production';
   const config: UserConfig = {
     // Base public path for production
-    base: mode === 'production' ? '/' : '/',
+    base: isProduction ? '/' : '/',
     
     // Development server config
     server: {
@@ -48,10 +49,16 @@ export default defineConfig(({ mode }): UserConfig => {
     build: {
       sourcemap: true,
       outDir: 'dist',
+      emptyOutDir: true,
+      manifest: true,
       rollupOptions: {
+        input: path.resolve(__dirname, 'frontend/index.html'),
         output: {
+          entryFileNames: 'assets/[name]-[hash].js',
+          chunkFileNames: 'assets/[name]-[hash].js',
+          assetFileNames: 'assets/[name]-[hash][extname]',
           manualChunks: {
-            vendor: ['react', 'react-dom'],
+            vendor: ['react', 'react-dom', 'react-router-dom'],
           },
         },
       },
