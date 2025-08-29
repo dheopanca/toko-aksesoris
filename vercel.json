@@ -6,10 +6,12 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/frontend/index.html" }
   ],
+  "rewrites": [
+    { "source": "/", "destination": "/frontend/index.html" },
+    { "source": "/:path*", "destination": "/frontend/index.html" }
+  ],
   "buildCommand": "cd frontend && npm install && npm run build",
-  "installCommand": "cd frontend && npm install",
   "outputDirectory": "frontend/dist"
 }

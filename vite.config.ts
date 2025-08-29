@@ -11,7 +11,7 @@ export default defineConfig(({ mode }): UserConfig => {
   
   const config: UserConfig = {
     // Base public path for production
-    base: mode === 'production' ? '/frontend/' : '/',
+    base: mode === 'production' ? '/' : '/',
     
     // Development server config
     server: {
