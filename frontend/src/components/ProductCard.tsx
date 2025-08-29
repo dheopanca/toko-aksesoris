@@ -6,6 +6,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ShoppingCart, Eye, ImageOff } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/components/ui/use-toast";
+import ringLocal from "../../Asset/Gambar WhatsApp 2025-08-18 pukul 15.16.52_fac63789.jpg";
+import ringCincin from "../../Asset/Gambar WhatsApp 2025-08-18 pukul 15.15.57_6330c226.jpg";
+import ringSolitaire from "../../Asset/Gambar WhatsApp 2025-08-18 pukul 15.16.35_1b452722.jpg";
 
 interface ProductCardProps {
   product: Product;
@@ -53,8 +56,6 @@ export function ProductCard({ product }: ProductCardProps) {
         return "https://images.unsplash.com/photo-1561172358-cabf9d846a3c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60";
       case "bracelets":
         return "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60";
-      case "watches":
-        return "https://images.unsplash.com/photo-1524592094714-0f0654e20314?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60";
       default:
         return "https://images.unsplash.com/photo-1617038260897-41a1f14a2ea7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60";
     }
@@ -74,7 +75,13 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           ) : (
             <img
-              src={product.imageUrl}
+              src={(() => {
+                const name = (product.name || '').toLowerCase();
+                if (product.category === 'rings') {
+                  return name.includes('solitaire') ? ringSolitaire : ringLocal;
+                }
+                return product.imageUrl;
+              })()}
               alt={product.name}
               className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
               onError={() => setImageError(true)}

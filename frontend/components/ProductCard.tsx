@@ -51,20 +51,23 @@ export function ProductCard({ product }: ProductCardProps) {
   const getCategoryAssetImage = () => {
     switch (product.category) {
       case "rings":
-        return imgRings;
+        return imgBracelets;
       case "necklaces":
         return imgNecklaces;
       case "earrings":
-        return imgEarrings;
+        return imgRings;
       case "bracelets":
-        return imgBracelets;
+        return imgEarrings;
       default:
         return imgRings;
     }
   };
 
+  // Decide final image to show
   const categoryImage = getCategoryAssetImage();
-  // Always use local category asset to ensure consistent visuals
+  const displayImage = product.category === 'rings'
+    ? (product.name?.toLowerCase().includes('solitaire') ? imgRings : imgBracelets)
+    : categoryImage;
 
   return (
     <div className="group hover-lift elegant-card">
@@ -76,14 +79,14 @@ export function ProductCard({ product }: ProductCardProps) {
           {imageError ? (
             <div className="h-full w-full flex items-center justify-center bg-gray-100">
               <img
-                src={categoryImage}
+                src={displayImage}
                 alt={product.name}
                 className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
               />
             </div>
           ) : (
             <img
-              src={categoryImage}
+              src={displayImage}
               alt={product.name}
               className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
               onError={() => setImageError(true)}

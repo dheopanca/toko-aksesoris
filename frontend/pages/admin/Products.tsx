@@ -193,12 +193,20 @@ const AdminProductsPage = () => {
       case "necklaces":
         return imgNecklaces;
       case "earrings":
-        return imgEarrings;
+        return imgRings;
       case "bracelets":
-        return imgBracelets;
+        return imgEarrings;
       default:
         return imgRings;
     }
+  };
+
+  // Per-product display image logic for Admin grid
+  const getDisplayImage = (product: Product) => {
+    if (product.category === 'rings') {
+      return product.name.toLowerCase().includes('solitaire') ? imgRings : imgBracelets;
+    }
+    return getCategoryAssetImage(product.category);
   };
 
   return (
@@ -252,7 +260,7 @@ const AdminProductsPage = () => {
                 <div className="relative">
                   <div className="h-48 bg-gray-100 flex items-center justify-center">
                     <img
-                      src={getCategoryAssetImage(product.category)}
+                      src={getDisplayImage(product)}
                       alt={product.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
