@@ -6,10 +6,20 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { 
+      "src": "/(.*)", 
+      "dest": "/index.html",
+      "headers": {
+        "Cache-Control": "s-maxage=0",
+        "X-Frame-Options": "DENY"
+      }
+    }
   ],
   "buildCommand": "npm run build",
   "installCommand": "npm install && npm --prefix backend install",
   "framework": "vite",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
